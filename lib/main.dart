@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_balance/themes/mainTheme.dart';
+import 'package:my_balance/views/Home.dart';
 import 'package:my_balance/views/Login.dart';
 import 'package:my_balance/views/Register.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: mainTheme(),
       initialRoute: "/",
       routes: {
-        "/": (context) => Register(),
+        "/": (context) => Home(),
         "/login": (context) => Login(),
         "/register": (context) => Register(),
       },
