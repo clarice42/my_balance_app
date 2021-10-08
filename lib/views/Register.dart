@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_balance/widgets/AppTitle.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatelessWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 160,
+                    height: 90,
                   ),
                   AppTitle(),
-                  LoginForm(),
+                  RegisterForm(),
                 ],
               ),
             ),
@@ -37,19 +37,22 @@ class Login extends StatelessWidget {
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _RegisterFormState createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordConfirmationController = TextEditingController();
 
   bool isObscure = true;
+  bool isObscure2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,22 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          TextFormField(
+            controller: _nameController,
+            keyboardType: TextInputType.name,
+            decoration: InputDecoration(
+              labelText: "Nome",
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Nome não pode ser vazio.";
+              }
+              return null;
+            },
+          ),
+          SizedBox(
+            height: 15,
+          ),
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -99,6 +118,42 @@ class _LoginFormState extends State<LoginForm> {
               if (value.length < 8 || value.length > 32) {
                 return "A senha deve ter entre 8 e 32 caracteres.";
               }
+              if (_passwordConfirmationController.text !=
+                  _passwordController.text) {
+                return "Senha e confirmação de senha não conferem!";
+              }
+              return null;
+            },
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            controller: _passwordConfirmationController,
+            keyboardType: TextInputType.text,
+            obscureText: isObscure2,
+            decoration: InputDecoration(
+                labelText: "Confirme a senha",
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      isObscure2 ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      isObscure2 = !isObscure2;
+                    });
+                  },
+                )),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Senha não pode ser vazia.";
+              }
+              if (value.length < 8 || value.length > 32) {
+                return "A senha deve ter entre 8 e 32 caracteres.";
+              }
+              if (_passwordConfirmationController.text !=
+                  _passwordController.text) {
+                return "Senha e confirmação de senha não conferem!";
+              }
               return null;
             },
           ),
@@ -106,19 +161,18 @@ class _LoginFormState extends State<LoginForm> {
             height: 20,
           ),
           SizedBox(
-            height: 46,
             width: MediaQuery.of(context).size.width,
+            height: 46,
             child: ElevatedButton(
               onPressed: () {
                 SystemChannels.textInput.invokeMethod('TextInput.hide');
-
                 if (_formKey.currentState!.validate()) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/', (Route<dynamic> route) => false);
+                      '/login', (Route<dynamic> route) => false);
                 }
               },
               child: Text(
-                "Entrar",
+                "Cadastrar",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
@@ -126,6 +180,23 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
+          SizedBox(
+            height: 32,
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login', (Route<dynamic> route) => false);
+            },
+            child: Text(
+              "Já tem uma conta? Entre agora!",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 15,
+              ),
+            ),
+          )
         ],
       ),
     );
