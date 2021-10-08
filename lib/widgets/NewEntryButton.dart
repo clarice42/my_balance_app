@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_balance/views/NewEntry.dart';
 
 class NewEntryButton extends StatelessWidget {
   final String name;
   final String route;
   final IconData icon;
+  final List items;
 
-  const NewEntryButton(
-      {required this.name, required this.route, required this.icon});
+  const NewEntryButton({
+    required this.name,
+    required this.route,
+    required this.icon,
+    required this.items,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,25 @@ class NewEntryButton extends StatelessWidget {
       height: 100,
       width: 150,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          route == "/new_entry"
+              ? Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NewEntry(
+                      items: items,
+                      isNegative: false,
+                    ),
+                  ),
+                )
+              : Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NewEntry(
+                      items: items,
+                      isNegative: true,
+                    ),
+                  ),
+                );
+        },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
@@ -27,7 +51,7 @@ class NewEntryButton extends StatelessWidget {
                   icon,
                   size: 25,
                 ),
-                Container(                  
+                Container(
                   width: 70,
                   child: Text(
                     name,
