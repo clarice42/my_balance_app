@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: "My Balance App",
       debugShowCheckedModeBanner: false,
       theme: mainTheme(),
-      initialRoute: "/",
+      initialRoute: "/register",
       routes: {
         "/": (context) => Home(),
         "/login": (context) => Login(),

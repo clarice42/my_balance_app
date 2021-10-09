@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   var items = [];
+  
   Home() {
     items = [];
   }
@@ -81,7 +82,22 @@ class _HomeState extends State<Home> {
                         itemCount: widget.items.length,
                         itemBuilder: (BuildContext ctxt, int index) {
                           final item = widget.items[index];
-                          return Item(item: item);
+                          return (widget.items.length == 0
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 70,
+                                    vertical: 150,
+                                  ),
+                                  child: Text(
+                                    "Não há registros de entrada ou saída",
+                                    style: TextStyle(
+                                      color: Color(0xFF868686),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                )
+                              : Item(item: item));
                         },
                       ),
                     ],
