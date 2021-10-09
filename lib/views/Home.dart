@@ -2,19 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:my_balance/models/entry.dart';
-import 'package:my_balance/widgets/NewEntryButton.dart';
+import 'package:my_balance/widgets/Item.dart';
+import 'package:my_balance/widgets/NewItemButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   var items = [];
-  double sum = 0;
-
   Home() {
     items = [];
-    sum = 0;
-    // items.add(Entry(name: "Despesa 1", value: "23.99", negative: true));
-    // items.add(Entry(name: "Lucro 1", value: "43.89", negative: false));
-    // items.add(Entry(name: "Despesa 2", value: "2.99", negative: true));
   }
 
   @override
@@ -86,44 +81,8 @@ class _HomeState extends State<Home> {
                         itemCount: widget.items.length,
                         itemBuilder: (BuildContext ctxt, int index) {
                           final item = widget.items[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 0,
-                              top: 18,
-                              right: 12,
-                              left: 12,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  item.name,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  item.value,
-                                  style: TextStyle(
-                                    color: item.negative
-                                        ? Colors.red
-                                        : Colors.green,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          return Item(item: item);
                         },
-                      ),
-                      Text(
-                        widget.sum.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 17,
-                        ),
                       ),
                     ],
                   ),
@@ -134,13 +93,13 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    NewEntryButton(
+                    NewItemButton(
                       name: "Nova entrada",
                       route: "/new_entry",
                       icon: Icons.add_circle_outline_outlined,
                       items: widget.items,
                     ),
-                    NewEntryButton(
+                    NewItemButton(
                       name: "Nova saída",
                       route: "/",
                       icon: Icons.remove_circle_outline_outlined,

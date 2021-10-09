@@ -2,27 +2,33 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:my_balance/models/entry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NewEntry extends StatefulWidget {
+class NewItem extends StatefulWidget {
   final List items;
   final bool isNegative;
 
-  NewEntry({
+  NewItem({
     required this.items,
     required this.isNegative,
   });
 
   @override
-  _NewEntryState createState() => _NewEntryState();
+  _NewItemState createState() => _NewItemState();
 }
 
-class _NewEntryState extends State<NewEntry> {
+class _NewItemState extends State<NewItem> {
   final _valueController = TextEditingController();
   final _nameController = TextEditingController();
 
   void add() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat("dd/MM");
+    String formattedDate = formatter.format(now);
+    //print(formattedDate);
+
     if (_valueController.text.isEmpty || _nameController.text.isEmpty) return;
 
     setState(() {
@@ -31,6 +37,7 @@ class _NewEntryState extends State<NewEntry> {
           name: _nameController.text,
           value: _valueController.text,
           negative: widget.isNegative ? true : false,
+          date: formattedDate,
         ),
       );
       _valueController.text = "";

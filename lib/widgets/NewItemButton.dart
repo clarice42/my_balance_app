@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_balance/views/NewEntry.dart';
+import 'package:my_balance/views/NewItem.dart';
 
-class NewEntryButton extends StatelessWidget {
+class NewItemButton extends StatelessWidget {
   final String name;
   final String route;
   final IconData icon;
   final List items;
 
-  const NewEntryButton({
+  const NewItemButton({
     required this.name,
     required this.route,
     required this.icon,
@@ -24,7 +24,7 @@ class NewEntryButton extends StatelessWidget {
           route == "/new_entry"
               ? Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => NewEntry(
+                    builder: (context) => NewItem(
                       items: items,
                       isNegative: false,
                     ),
@@ -32,7 +32,7 @@ class NewEntryButton extends StatelessWidget {
                 )
               : Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => NewEntry(
+                    builder: (context) => NewItem(
                       items: items,
                       isNegative: true,
                     ),
